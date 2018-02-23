@@ -15,3 +15,7 @@ echo "----------- benchmarking C -----------"
 ./C/bin/benchmark $ITER $BENCHES
 echo "----------- benchmarking C# -----------"
 dotnet run -c Release --project ./CS $ITER $BENCHES
+echo "----------- benchmarking Python 2 -----------"
+python2 ./Python/main.py $ITER 100
+echo "----------- benchmarking Python 3 -----------"
+python3 ./Python/main.py $ITER 100
