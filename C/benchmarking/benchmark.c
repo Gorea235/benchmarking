@@ -1,5 +1,7 @@
 /*
  * Implementation of the benchmark tool.
+ * Sourced from https://gist.github.com/RenatoUtsch/4162799
+ * Modified by me
  */
 
 #include "benchmark.h"
@@ -21,13 +23,13 @@ using namespace std;
  **/
 double get_current_time();
 
-double benchmark(void func(void *, size_t), void *data, size_t numBytes, int numBenchmarks)
+double benchmark(void func(int), int iters, int numBenchmarks)
 {
     double mean_time = 0.0;  /** The time the benchmark ran. **/
     double total_time = 0.0; /** The total time. **/
     int i;
 
-    printf("----------------------------\nStarting benchmark...\n----------------------------\n");
+    // printf("----------------------------\nStarting benchmark...\n----------------------------\n");
 
     for (i = 0; i < numBenchmarks; ++i)
     {
@@ -39,7 +41,7 @@ double benchmark(void func(void *, size_t), void *data, size_t numBytes, int num
         start_time = get_current_time();
 
         /* Call the function to benchmark. */
-        func(data, numBytes);
+        func(iters);
 
         /* End the benchmark. */
         end_time = get_current_time();
@@ -55,13 +57,13 @@ double benchmark(void func(void *, size_t), void *data, size_t numBytes, int num
             mean_time = bench_time;
 
         /* Print the current step. */
-        printf("Completed step %d\tTime spent: %fs\n", i + 1, bench_time);
+        // printf("Completed step %d\tTime spent: %fs\n", i + 1, bench_time);
     }
 
     /* Gobal time spent in the benchmark. */
-    printf("----------------------------\nEnded benchmark!\n");
-    printf("Total time spent: %fs\n", total_time);
-    printf("Mean time spent: %fs\n----------------------------\n", mean_time);
+    // printf("----------------------------\nEnded benchmark!\n");
+    // printf("Total time spent: %fs\n", total_time);
+    // printf("Mean time spent: %fs\n----------------------------\n", mean_time);
 
     /* Return the mean time. */
     return mean_time;

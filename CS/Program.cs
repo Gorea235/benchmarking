@@ -9,20 +9,25 @@ namespace benchmark
 
         static void Main(string[] args)
         {
-            Benchmark(ToBench, int.Parse(args[0]));
+            int iters = int.Parse(args[0]);
+            int benches = int.Parse(args[1]);
+            double bench = Benchmark(ToBench, iters, benches);
+            Console.WriteLine("{0} benchmarks with {1} iterations each: avg {2}s", benches, iters, bench);
         }
 
-        static double Benchmark(Action func, int numBenchmarks)
+        static double Benchmark(Action<int> func, int iters, int numBenchmarks)
         {
+            // clear garbage and init function
             GC.Collect();
-            func();
+            func(1);
+
             Stopwatch stopwatch = new Stopwatch();
             TimeSpan meanTime;
             TimeSpan totalTime;
 
-            Console.WriteLine("----------------------------");
-            Console.WriteLine("Starting Benchmark");
-            Console.WriteLine("----------------------------");
+            // Console.WriteLine("----------------------------");
+            // Console.WriteLine("Starting Benchmark");
+            // Console.WriteLine("----------------------------");
 
             for (int i = 0; i < numBenchmarks; i++)
             {
@@ -30,7 +35,7 @@ namespace benchmark
                 stopwatch.Start();
 
                 // Call the function to benchmark
-                func();
+                func(iters);
 
                 // End the benchmark
                 stopwatch.Stop();
@@ -45,27 +50,27 @@ namespace benchmark
                     meanTime = stopwatch.Elapsed;
 
                 // Print the current step
-                Console.WriteLine("Completed step {0}\tTime spent: {1}s", i + 1, stopwatch.Elapsed.GetExplicitSeconds());
+                // Console.WriteLine("Completed step {0}\tTime spent: {1}s", i + 1, stopwatch.Elapsed.GetExplicitSeconds());
 
                 // reset stopwatch
                 stopwatch.Reset();
             }
 
             // Gobal time spent in the benchmark
-            Console.WriteLine("----------------------------\n\n");
-            Console.WriteLine("Ended benchmark!");
-            Console.WriteLine("Total time spent: {0}s", totalTime.GetExplicitSeconds());
-            Console.WriteLine("Mean time spent: {0}s", meanTime.GetExplicitSeconds());
-            Console.WriteLine("----------------------------");
+            // Console.WriteLine("----------------------------\n\n");
+            // Console.WriteLine("Ended benchmark!");
+            // Console.WriteLine("Total time spent: {0}s", totalTime.GetExplicitSeconds());
+            // Console.WriteLine("Mean time spent: {0}s", meanTime.GetExplicitSeconds());
+            // Console.WriteLine("----------------------------");
 
             // Return the mean time
             return meanTime.GetExplicitSeconds();
         }
 
-        static void ToBench()
+        static void ToBench(int iters)
         {
             tmp = 0;
-            for (long i = 0; i < 1000000000; i++)
+            for (long i = 0; i < iters; i++)
                 tmp += Math.Sqrt(i);
         }
     }

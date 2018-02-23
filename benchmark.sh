@@ -1,15 +1,17 @@
 #! /bin/bash
 # ======= runs complete benchmarking =======
 
-# iteration times
-ITER=10
+# iteration/benchmark times
+ITER=1000000000
+BENCHES=10
 
 # build items
 (cd ./C && make)
 (cd ./CS && make release)
 
 # benchmark
-echo C
-./C/benchmark $ITER
-echo "C#"
-dotnet run -c Release --project ./CS $ITER
+echo "======================= Performing Benchmarks ======================="
+echo "----------- benchmarking C -----------"
+./C/bin/benchmark $ITER $BENCHES
+echo "----------- benchmarking C# -----------"
+dotnet run -c Release --project ./CS $ITER $BENCHES

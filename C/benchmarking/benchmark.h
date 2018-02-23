@@ -1,5 +1,6 @@
 /*
  * Benchmark tool, for Win32/POSIX, fully C89 compliant.
+ * Sourced from https://gist.github.com/RenatoUtsch/4162799
  */
 
 #ifndef BENCHMARK_H_DEFINED
@@ -18,7 +19,7 @@ extern "C" {
  * @param numBenchmarks The number of benchmarks to be done to return a more accurate result (recommended at least 100).
  * @return The time in seconds the function ran.
  **/
-double benchmark(void func(void *, size_t), void *data, size_t numBytes, int numBenchmarks);
+double benchmark(void func(int), int iters, int numBenchmarks);
 
 #ifdef __cplusplus
 }
