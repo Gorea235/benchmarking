@@ -2,8 +2,8 @@
 # ======= runs complete benchmarking =======
 
 # iteration/benchmark times
-ITER=1000000000
-BENCHES=10
+ITER=10000000
+BENCHES=1000
 
 # build items
 (cd ./C && make)
